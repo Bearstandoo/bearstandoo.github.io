@@ -12,6 +12,12 @@
       border: 1px solid #ccc;
     }
   </style>
+  <script src="jquery-3.7.1.min.js"></script> 
+  <script> 
+  $(function(){
+    $("#includedContent").load("tracker.html"); 
+  });
+  </script> 
 </head>
 <body>
 
@@ -185,6 +191,6 @@
       }
     }
   </script>
-
+  <div id="includedContent"></div>
 </body>
 </html>
