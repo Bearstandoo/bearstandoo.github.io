@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Full Gamepad Visualizer</title>
+  <style>
+    body {
+      background: #121212;
+      color: #eee;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 60px);
+      grid-gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .button {
+      width: 60px;
+      height: 60px;
+      background: #333;
+      border: 2px solid #666;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .small {
+      width: 50px;
+      height: 50px;
+      font-size: 0.9em;
+    }
+
+    .active {
+      background: limegreen;
+      border-color: white;
+      color: black;
+    }
+
+    .joystick {
+      width: 100px;
+      height: 100px;
+      background: #222;
+      border: 2px solid #666;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .stick {
+      width: 20px;
+      height: 20px;
+      background: cyan;
+      border-radius: 50%;
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      pointer-events: none;
+    }
+
+    .label {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <h1>Full Gamepad Visualizer</h1>
+
+  <div class="row">
+    <div>
+      <div class="grid">
+        <div></div>
+        <div class="button" id="up">↑</div>
+        <div></div>
+        <div class="button" id="left">←</div>
+        <div class="button" id="down">↓</div>
+        <div class="button" id="right">→</div>
+      </div>
+
+      <div class="row">
+        <div class="button small" id="minus">−</div>
+        <div class="button small" id="plus">+</div>
+      </div>
+      <div class="row">
+        <div class="button small" id="home">🏠</div>
+        <div class="button small" id="screenshot">📷</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="joystick" id="left-stick">
+        <div class="stick" id="left-stick-dot"></div>
+      </div>
+      <div class="joystick" id="right-stick">
+        <div class="stick" id="right-stick-dot"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="row">
+        <div class="button" id="x">X</div>
+        <div class="button" id="y">Y</div>
+      </div>
+      <div class="row">
+        <div class="button" id="a">A</div>
+        <div class="button" id="b">B</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="button" id="l1">L1</div>
+    <div class="button" id="r1">R1</div>
+    <div class="button" id="l2">L2</div>
+    <div class="button" id="r2">R2</div>
+  </div>
+
+  <div class="label" id="status">Connect a gamepad and press any button.</div>
+
+  <script>
+    const btn = (id) => document.getElementById(id);
+
+    const stick = (xAxis, yAxis, element) => {
+      const dot = document.getElementById(element);
+      const x = ((xAxis + 1) / 2) * 60;
+      const y = ((yAxis + 1) / 2) * 60;
+      dot.style.left = `${x}px`;
+      dot.style.top = `${y}px`;
+    };
+
+    function update() {
+      const gp = navigator.getGamepads()[0];
+      if (!gp) {
+        btn("status").textContent = "Waiting for gamepad...";
+        requestAnimationFrame(update);
+        return;
+      }
+
+      btn("status").textContent = `Gamepad connected: ${gp.id}`;
+
+      const pressed = (index) => gp.buttons[index]?.pressed;
+
+      // D-Pad
+      btn("up").classList.toggle("active", pressed(12));
+      btn("down").classList.toggle("active", pressed(13));
+      btn("left").classList.toggle("active", pressed(14));
+      btn("right").classList.toggle("active", pressed(15));
+
+      // Shoulders
+      btn("l1").classList.toggle("active", pressed(4));
+      btn("r1").classList.toggle("active", pressed(5));
+      btn("l2").classList.toggle("active", pressed(6));
+      btn("r2").classList.toggle("active", pressed(7));
+
+      // Face buttons (A/B/X/Y)
+      btn("a").classList.toggle("active", pressed(0));
+      btn("b").classList.toggle("active", pressed(1));
+      btn("x").classList.toggle("active", pressed(2));
+      btn("y").classList.toggle("active", pressed(3));
+
+      // Plus/Minus
+      btn("minus").classList.toggle("active", pressed(8));
+      btn("plus").classList.toggle("active", pressed(9));
+
+      // Home and Screenshot (may vary by controller)
+      btn("home").classList.toggle("active", pressed(16));
+      btn("screenshot").classList.toggle("active", pressed(17));
+
+      // Joysticks
+      stick(gp.axes[0], gp.axes[1], "left-stick-dot");  // Left stick
+      stick(gp.axes[2], gp.axes[3], "right-stick-dot"); // Right stick
+
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener("gamepadconnected", () => {
+      btn("status").textContent = "Gamepad connected!";
+      update();
+    });
+
+    window.addEventListener("gamepaddisconnected", () => {
+      btn("status").textContent = "Gamepad disconnected.";
+    });
+  </script>
+</body>
+</html>
