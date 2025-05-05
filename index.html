@@ -39,13 +39,14 @@
     if (iframeSrc.indexOf('present') > -1) {
         console.log("The embedded Google Slides is in presentation mode.");
 
-        // Change the iframe's src to remove 'present' and go back to edit mode
-        iframe.src = iframeSrc.replace('/present', '/edit');
+        // Reload iframe to switch to edit mode
+        iframe.src = iframe.src.replace('/present', '/edit');
         console.log("Switched to edit mode.");
     } else {
         console.log("The embedded Google Slides is not in presentation mode.");
     }
 }, 10000); // Check every 10000 milliseconds (10 seconds)
+
 
 
     </script>
