@@ -34,21 +34,19 @@
       setInterval(() => {
     const iframe = document.querySelector('iframe'); // Select the iframe element
     const iframeSrc = iframe ? iframe.src : '';
+    setInterval(() => {
+    const iframe = document.querySelector('iframe'); // Select the iframe element
+    const iframeSrc = iframe ? iframe.src : '';
 
-    // Check if the iframe's URL contains 'present' (indicating it's in presentation mode)
-    if (iframeSrc.indexOf('present') > -1) {
+    // Check if the iframe's URL contains '#slide' (indicating it's in presentation mode)
+    if (iframeSrc.indexOf('#slide') > -1) {
         console.log("The embedded Google Slides is in presentation mode.");
 
-        // Reload iframe to switch to edit mode
-        iframe.src = "data:text/html,%3C%21DOCTYPE%20html%3E%0D%0A%3Chtml%20lang%3D%22en%22%3E%0D%0A%3Chead%3E%0D%0A%20%20%20%20%3Cmeta%20charset%3D%22UTF-8%22%3E%0D%0A%20%20%20%20%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2C%20initial-scale%3D1.0%22%3E%0D%0A%20%20%20%20%3Cstyle%3E%0D%0A%20%20%20%20%20%20%20%20html%2C%20body%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20height%3A%20100%25%3B%20%20%2F%2A%20Ensure%20the%20body%20takes%20full%20height%20%2A%2F%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20margin%3A%200%3B%20%20%2F%2A%20Remove%20default%20margin%20%2A%2F%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20display%3A%20flex%3B%20%20%2F%2A%20Enable%20flexbox%20%2A%2F%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20justify-content%3A%20center%3B%20%20%2F%2A%20Center%20horizontally%20%2A%2F%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20align-items%3A%20center%3B%20%20%2F%2A%20Center%20vertically%20%2A%2F%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20%20%20%20%20h1%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20text-align%3A%20center%3B%20%20%2F%2A%20Center%20text%20inside%20h1%20%2A%2F%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%3C%2Fstyle%3E%0D%0A%3C%2Fhead%3E%0D%0A%3Cbody%3E%0D%0A%20%20%20%20%3Ch1%3EReload%20the%20page%2C%20and%20don%27t%20go%20into%20presentation%20mode.%20It%20only%20works%20when%20you%20are%20outside%20presentation%20mode.%3C%2Fh1%3E%0D%0A%3C%2Fbody%3E%0D%0A%3C%2Fhtml%3E"
-        
+        iframe.src = "data:text/html,%3C%21DOCTYPE%20html%3E%0D%0A%3Chtml%20lang%3D%22en%22%3E%0D%0A%3Chead%3E%0D%0A%20%20%20%20%3Cmeta%20charset%3D%22UTF-8%22%3E%0D%0A%20%20%20%20%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2C%20initial-scale%3D1.0%22%3E%0D%0A%20%20%20%20%3Cstyle%3E%0D%0A%20%20%20%20%20%20%20%20html%2C%20body%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20height%3A%20100%25%3B%20%20%2F%2A%20Ensure%20the%20body%20takes%20full%20height%20%2A%2F%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20margin%3A%200%3B%20%20%2F%2A%20Remove%20default%20margin%20%2A%2F%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20display%3A%20flex%3B%20%20%2F%2A%20Enable%20flexbox%20%2A%2F%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20justify-content%3A%20center%3B%20%20%2F%2A%20Center%20horizontally%20%2A%2F%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20align-items%3A%20center%3B%20%20%2F%2A%20Center%20vertically%20%2A%2F%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20%20%20%20%20h1%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20text-align%3A%20center%3B%20%20%2F%2A%20Center%20text%20inside%20h1%20%2A%2F%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%3C%2Fstyle%3E%0D%0A%3C%2Fhead%3E%0D%0A%3Cbody%3E%0D%0A%20%20%20%20%3Ch1%3EReload%20the%20page%2C%20and%20don%27t%20go%20into%20presentation%20mode.%20It%20only%20works%20when%20you%20are%20outside%20presentation%20mode.%3C%2Fh1%3E%0D%0A%3C%2Fbody%3E%0D%0A%3C%2Fhtml%3E";
     } else {
         console.log("The embedded Google Slides is not in presentation mode.");
     }
 }, 10000); // Check every 10000 milliseconds (10 seconds)
-
-
-
     </script>
   </body>
 </html>
