@@ -1,1 +1,35 @@
-<h1>Currently in development, please wait a bit...</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Minecraft Slides Game</title>
+    <style>
+      body, html {
+        margin: 0;
+        overflow: hidden;
+        height: 100%;
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe
+      src="https://docs.google.com/presentation/d/1pl1UxcS6YaUMyWHDf8C-ZsfbSLARsC7QLGL9cimtEP4/present"
+      id="slideFrame"
+      allow="fullscreen"
+    ></iframe>
+
+    <script>
+      // Block arrow keys, spacebar, and Page Up/Down
+      document.addEventListener('keydown', (e) => {
+        const blockedKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' ', 'PageUp', 'PageDown'];
+        if (blockedKeys.includes(e.key)) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+    </script>
+  </body>
+</html>
