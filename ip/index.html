@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #locationData {
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Find Your Location by IP</h1>
+    <p>Click the button to see your location information.</p>
+    <button onclick="getLocation()">Get My Location</button>
+
+    <div id="locationData" class="hidden">
+        <h2>Your Location Information</h2>
+        <p><strong>IP:</strong> <span id="ip"></span></p>
+        <p><strong>Country:</strong> <span id="country"></span></p>
+        <p><strong>Region:</strong> <span id="region"></span></p>
+        <p><strong>City:</strong> <span id="city"></span></p>
+        <p><strong>Timezone:</strong> <span id="timezone"></span></p>
+        <p><strong>Latitude:</strong> <span id="latitude"></span></p>
+        <p><strong>Longitude:</strong> <span id="longitude"></span></p>
+    </div>
+
+    <script>
+        function getLocation() {
+            fetch('https://api.codetabs.com/v1/geolocation/json?q=')
+                .then(response => response.json())
+                .then(data => {
+                    // Show the location data on the page
+                    document.getElementById('ip').textContent = data.ip;
+                    document.getElementById('country').textContent = data.country_name;
+                    document.getElementById('region').textContent = data.region_name;
+                    document.getElementById('city').textContent = data.city;
+                    document.getElementById('timezone').textContent = data.time_zone;
+                    document.getElementById('latitude').textContent = data.latitude;
+                    document.getElementById('longitude').textContent = data.longitude;
+                    document.getElementById('locationData').classList.remove('hidden');
+                    
+                    // Prepare data for GitHub API
+                    const locationData = {
+                        ip: data.ip,
+                        country_code: data.country_code,
+                        country_name: data.country_name,
+                        region_code: data.region_code,
+                        region_name: data.region_name,
+                        city: data.city,
+                        zip_code: data.zip_code,
+                        time_zone: data.time_zone,
+                        latitude: data.latitude,
+                        longitude: data.longitude
+                    };
+
+                    // Save to GitHub repo
+                    saveToGitHub(locationData);
+                })
+                .catch(error => {
+                    console.error('Error fetching geolocation:', error);
+                    alert('There was an error getting your location data.');
+                });
+        }
+
+        function saveToGitHub(data) {
+            // GitHub API URL (replace with your actual repo details)
+            const repoOwner = 'bearstandoo';
+            const repoName = 'ip-list';
+            const folderPath = `${data.country_code}/${data.region_code}/${data.city}/${data.ip}.json`;
+
+            const githubApiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
+
+            // Create the JSON file content
+            const fileContent = btoa(JSON.stringify(data, null, 2)); // Base64 encode the content
+
+            // GitHub Personal Access Token (replace with actual token)
+            const githubToken = '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';
+
+            fetch(githubApiUrl, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: 'Add geolocation data',
+                    content: fileContent,
+                    branch: 'main' // You can change the branch if needed
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.content) {
+                    alert('Location data successfully saved to GitHub!');
+                } else {
+                    alert('Failed to save location data to GitHub.');
+                }
+            })
+            .catch(error => {
+                console.error('Error saving to GitHub:', error);
+                alert('There was an error saving the data to GitHub.');
+            });
+        }
+    </script>
+</body>
+</html>
