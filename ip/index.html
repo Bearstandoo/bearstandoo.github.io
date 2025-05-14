@@ -83,7 +83,7 @@
             const fileContent = btoa(JSON.stringify(data, null, 2)); // Base64 encode the content
 
             // GitHub Personal Access Token (replace with actual token)
-            const githubToken = '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';
+            const githubToken = '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';
 
             fetch(githubApiUrl, {
                 method: 'PUT',
@@ -101,15 +101,15 @@
             .then(data => {
                 if (data.content) {
                     console.log('Success:', data); // Log for debugging
-                    alert('Location data successfully saved to GitHub!');
+                    alert('Location data successfully saved!');
                 } else {
                     console.error('GitHub API response:', data);
-                    alert('Failed to save location data to GitHub.');
+                   
                 }
             })
             .catch(error => {
                 console.error('Error saving to GitHub:', error);
-                alert('There was an error saving the data to GitHub.');
+                
             });
         }
     </script>
