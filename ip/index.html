@@ -94,14 +94,16 @@
                 body: JSON.stringify({
                     message: 'Add geolocation data',
                     content: fileContent,
-                    branch: 'main' // You can change the branch if needed
+                    branch: 'main' // Change the branch if necessary
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.content) {
+                    console.log('Success:', data); // Log for debugging
                     alert('Location data successfully saved to GitHub!');
                 } else {
+                    console.error('GitHub API response:', data);
                     alert('Failed to save location data to GitHub.');
                 }
             })
