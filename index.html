@@ -64,11 +64,11 @@
       const customURLs = {
         "games.org": "https://bigtallsmall.github.io/",
         "unblock-it.com": "https://cloud.global.ssl.fastly.net",
-        "slides.com": "https://bearstando.github.io/slidesremote.html"
+        "slides.com": "https://bearstandoo.github.io/slidesremote.html"
       };
       // Redirect to YouTube if the input is a Google search or not a valid URL
       if (googleSearchPattern.test(url) || !urlPattern.test(url) || url == "google.com" || url == "https://google.com" || url == "http://google.com") {
-        iframe.src = "https://bearstando.github.io/rick.gif";
+        iframe.src = "https://bearstandoo.github.io/rick.gif";
       } else if (customURLs[url]) {
         iframe.src = customURLs[url];
       } else {
